@@ -1,0 +1,16 @@
+23188c50469168141b53e4147befa443 *DESCRIPTION
+84dcc94da3adb52b53ae4fa38fe49e5d *LICENSE
+b38063dfee1696c166b943c9a072e4ef *NAMESPACE
+19a9f021d0f2e5340ff4827915264282 *R/ConcTime.R
+ad5633ee6006435e23b3c08506780c9a *R/Dataset.R
+f8a6fcfedc2b259ff39f1dda14c90c1b *R/Plot.R
+393eb1cd16c522ca4b6be5fc0f3f28c8 *R/data.R
+38ec98605d57cfe49fda9a5766901830 *R/sysdata.rda
+5f72bbcd187b2a64f7cb14c9fc7af2f8 *data/UnitTable.rda
+9f1f8441c9a173b9b8c399f3d147b567 *man/UnitTable.Rd
+79c466f831109b9a386dbab2e945a11b *man/caffConcTime.Rd
+7131859f8226b8365ec19e6dc70b8ad4 *man/caffConcTimeMulti.Rd
+f1ab680161568992fe29f49f2026965b *man/caffDataset.Rd
+fa94d31523eca43e0ddc7ecec25bb192 *man/caffDatasetMulti.Rd
+16220e9ee99582fd6cd89913f4ae5882 *man/caffPlot.Rd
+4cfc76e8375fc68fdb4257c3fc1bbeea *man/caffPlotMulti.Rd
