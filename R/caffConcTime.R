@@ -14,7 +14,7 @@
 #' @seealso \url{https://asancpt.github.io/caffsim}
 
 caffConcTime <- function(Weight, Dose, N = 20){
-  ggConc <- caffDataset(Weight, Dose, N) %>% 
+  ggConc <- caffPkparam(Weight, Dose, N) %>% 
     select(CL, V, Ka, Ke) %>% 
     mutate(Subject = row_number()) %>% 
     left_join(expand.grid(
@@ -25,7 +25,6 @@ caffConcTime <- function(Weight, Dose, N = 20){
     select(Subject, Time, Conc)
   return(ggConc)
 }
-
 
 #' Create a dataset of the concentration-time curve of multiple dosing of caffeine
 #'
@@ -45,11 +44,15 @@ caffConcTime <- function(Weight, Dose, N = 20){
 #' @seealso \url{https://asancpt.github.io/caffsim}
 
 caffConcTimeMulti <- function(Weight, Dose, N = 20, Tau = 8, Repeat = 4){
-  Subject <- seq(1, N, length.out = N) # 
-  Time <- seq(0, 96, length.out = 481) # 
-  Grid <- expand.grid(x = Subject, y = Time) %>% select(Subject=x, Time=y)
+#Weight=20; Dose=300; N = 20; Tau = 8; Repeat = 4
   
-  ggsuper <- caffDataset(Weight, Dose, N) %>% 
+  Subject <- seq(1, N, length.out = N) # 
+  Time <- seq(0, 96, by = 0.1) # 
+  Grid <- expand.grid(x = Subject, y = Time) %>% 
+    as_tibble() %>% 
+    select(Subject=x, Time=y)
+  
+  ggsuper <- caffPkparam(Weight, Dose, N) %>% 
     select(CL, V, Ka, Ke) %>% 
     mutate(Subject = row_number()) %>% 
     left_join(Grid, by = "Subject") %>% 
@@ -60,7 +63,7 @@ caffConcTimeMulti <- function(Weight, Dose, N = 20, Tau = 8, Repeat = 4){
   
   ## Superposition
   for (i in 1:Repeat){
-    Frame <- Tau * 5 * i
+    Frame <- Tau * 10 * i
     ggsuper <- ggsuper %>% 
       mutate(Conc = Conc + ConcTemp) %>% 
       mutate(ConcTemp = lag(ConcOrig, n = Frame, default = 0))
@@ -69,6 +72,3 @@ caffConcTimeMulti <- function(Weight, Dose, N = 20, Tau = 8, Repeat = 4){
   ggsuper <- ggsuper %>% select(Subject, Time, Conc)
   return(ggsuper)
 }
-
-globVar <- utils::globalVariables(c('CL', 'V', 'Ka', 'Ke', 'x', 'y', 'Time', 'Subject', 'Conc', 'AI', 'AUC', 'Aavss', 'Cavss', 'Cmax', 'Cmaxss', 'Cminss', 'ConcOrig', 'ConcTemp', 'Half_life', 'Tmax', 'X1', 'X2', 'X3', 'eta1', 'eta2', 'eta3'))
-
